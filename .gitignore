@@ -1,0 +1,7 @@
+node_modules
+.env.production
+.env.development
+dist/
+.npmrc 
+.vercel
+.env
