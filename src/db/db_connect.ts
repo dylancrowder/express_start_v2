@@ -5,10 +5,7 @@ dotenv.config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const URI =
-  process.env.DB_URI ||
-  "mongodb+srv://devdylancrowder:dilan_07@cluster0.hrvk9w9.mongodb.net/";
-
+const URI = process.env.DB_URI;
 export const initMongo = async () => {
   if (!URI) {
     console.error("❌ DB_URI is not defined in environment variables.");
