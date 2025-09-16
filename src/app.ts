@@ -48,6 +48,7 @@ const corsOptions = {
   credentials: true,
 };
 
+app.set("trust proxy", 1);
 app.use(cors(corsOptions));
 app.use(compression());
 app.use(bodyParser.json({ limit: "300kb" }));
