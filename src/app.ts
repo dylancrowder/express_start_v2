@@ -21,14 +21,6 @@ import { authMiddleware } from "./middlewares/authMiddleware";
 
 const app = express();
 
-//CORS
-const corsOptions = {
-  origin: "http://localhost:3000",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
-  credentials: true,
-};
-
 // Configuración de middlewares
 app.use(
   helmet.contentSecurityPolicy({
@@ -44,8 +36,18 @@ app.use(
     },
   })
 );
+//CORS
 
-// Configuración de middlewares
+const corsOptions = {
+  origin: [
+    "http://localhost:3000",
+    "https://express-start-v2-iihfdbjjh-dylancrowders-projects.vercel.app",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+  credentials: true,
+};
+
 app.use(cors(corsOptions));
 app.use(compression());
 app.use(bodyParser.json({ limit: "300kb" }));
