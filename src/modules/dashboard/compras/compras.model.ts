@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import User from "../db/schema/auth.schema";
+import User from "./compras.schema";
 
-export class AuthModel {
+export class ComprasModel {
   static async register(email: string, password: string) {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
