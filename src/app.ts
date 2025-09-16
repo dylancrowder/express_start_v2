@@ -15,8 +15,8 @@ import errorRoute from "./middlewares/error.route";
 import monitor from "./middlewares/monitor.middeware";
 import { roleMiddleware } from "./middlewares/rolesMiddleware";
 // Routes
-import authRoutes from "./routes/auth.routes";
-import start from "./routes/init.routes";
+import authRoutes from "./modules/auth/auth.routes";
+import comprasRoutes from "./modules/dashboard/compras/compras.routes";
 import { authMiddleware } from "./middlewares/authMiddleware";
 
 const app = express();
@@ -55,8 +55,8 @@ app.use(cookieParser());
 app.use(monitor);
 
 // Rutas específicas
-app.use("/inicio", authMiddleware, roleMiddleware("user"), start);
 app.use("/auth", authRoutes);
+app.use("/compras", comprasRoutes);
 app.use("/documentacion", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Manejo de rutas no encontradas
