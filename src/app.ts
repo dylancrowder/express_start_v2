@@ -58,7 +58,7 @@ app.use(monitor);
 app.use("/auth", authRoutes);
 app.use("/compras", comprasRoutes);
 app.use("/documentacion", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
+//INICIO
 app.get("/", (req, res) => {
   res.status(200).send("Welcome to the API!");
 });
