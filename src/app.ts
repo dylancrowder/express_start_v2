@@ -59,6 +59,10 @@ app.use("/auth", authRoutes);
 app.use("/compras", comprasRoutes);
 app.use("/documentacion", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+app.get("/", (req, res) => {
+  res.status(200).send("Welcome to the API!");
+});
+
 // Manejo de rutas no encontradas
 app.use(errorRoute);
 
