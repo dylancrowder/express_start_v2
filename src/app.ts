@@ -8,7 +8,7 @@ import morgan from "morgan";
 import { swaggerDocs } from "./documentation/swagger.config";
 import { apiLimiter } from "./utilities/apiLimiter";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
+
 //Middlewares
 import errorHandler from "./middlewares/error.middleware";
 import errorRoute from "./middlewares/error.route";
