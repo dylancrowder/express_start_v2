@@ -16,6 +16,7 @@ import monitor from "./middlewares/monitor.middeware";
 import { roleMiddleware } from "./middlewares/rolesMiddleware";
 // Routes
 import authRoutes from "./modules/auth/auth.routes";
+import comprasRoutes from "./modules/dashboard/compras/compras.routes";
 import { authMiddleware } from "./middlewares/authMiddleware";
 
 const app = express();
@@ -55,6 +56,7 @@ app.use(monitor);
 
 // Rutas específicas
 app.use("/auth", authRoutes);
+app.use("/compras", comprasRoutes);
 app.use("/documentacion", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Manejo de rutas no encontradas

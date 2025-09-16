@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-export interface Product {
+export interface ProductDTO {
   userId: Schema.Types.ObjectId;
   name: string;
   costCLP: number;

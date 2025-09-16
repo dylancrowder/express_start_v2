@@ -1,9 +1,9 @@
 import { Schema, model, HydratedDocument } from "mongoose";
-import { Product } from "../../../interfaces/producto.interface";
+import { ProductDTO } from "../../../interfaces/producto.interface";
 
-export type ProductDocument = HydratedDocument<Product>;
+export type ProductDocument = HydratedDocument<ProductDTO>;
 
-const ProductSchema = new Schema<Product>(
+const ProductSchema = new Schema<ProductDTO>(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     name: { type: String, required: true, maxlength: 100, trim: true },
@@ -19,6 +19,6 @@ const ProductSchema = new Schema<Product>(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-const ProductModel = model<Product>("Product", ProductSchema);
+const ProductModel = model<ProductDTO>("ProductDTO", ProductSchema);
 
 export default ProductModel;
