@@ -7,9 +7,9 @@ const logger = pino(
   isTestEnv
     ? { level: "silent" }
     : isProdEnv
-    ? { level: "trace" } // producción sin pino-pretty
+    ? { level: "info" } // producción: JSON puro y nivel adecuado
     : {
-        level: "trace", // desarrollo
+        level: "trace", // desarrollo local
         transport: {
           target: "pino-pretty",
           options: {

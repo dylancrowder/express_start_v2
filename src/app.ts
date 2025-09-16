@@ -8,7 +8,7 @@ import morgan from "morgan";
 import { swaggerDocs } from "./documentation/swagger.config";
 import { apiLimiter } from "./utilities/apiLimiter";
 import cookieParser from "cookie-parser";
-
+import dotenv from "dotenv";
 //Middlewares
 import errorHandler from "./middlewares/error.middleware";
 import errorRoute from "./middlewares/error.route";
@@ -63,7 +63,7 @@ app.use("/compras", comprasRoutes);
 app.use("/documentacion", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 //INICIO
 app.get("/", (req, res) => {
-  res.status(200).send("Welcome to the API!");
+  res.status(200).send(`EL USUARIO ES ${process.env.NODE_ENV}`);
 });
 
 // Manejo de rutas no encontradas
