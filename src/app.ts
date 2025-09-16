@@ -18,8 +18,14 @@ import { roleMiddleware } from "./middlewares/rolesMiddleware";
 import authRoutes from "./modules/auth/auth.routes";
 import comprasRoutes from "./modules/dashboard/compras/compras.routes";
 import { authMiddleware } from "./middlewares/authMiddleware";
+import { initMongo } from "./db/db_connect";
 
 const app = express();
+
+initMongo().catch((err) => {
+  console.error("Error inicializando Mongo:", err);
+  process.exit(1);
+});
 
 // Configuración de middlewares
 app.use(
