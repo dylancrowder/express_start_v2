@@ -21,7 +21,7 @@ const cached: {
 (global as any).mongoose = cached;
 
 export const initMongo = async () => {
-  if (cached.conn) return cached.conn; // reutiliza conexión si ya existe
+  if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
     cached.promise = mongoose

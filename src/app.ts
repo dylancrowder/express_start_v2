@@ -45,10 +45,7 @@ app.use(
 //CORS
 
 const corsOptions = {
-  origin: [
-    "http://localhost:3000",
-    "https://express-start-v2-iihfdbjjh-dylancrowders-projects.vercel.app",
-  ],
+  origin: ["https://app-gestion-kohl.vercel.app", "http://localhost:3000"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   credentials: true,
