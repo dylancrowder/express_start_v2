@@ -13,7 +13,7 @@ const UserSchema = new Schema<UserDTO>(
       lowercase: true,
       trim: true,
     },
-    password: { type: String, required: true }, // 🔒 siempre guardado hasheado
+    password: { type: String, required: true },
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );

@@ -9,10 +9,6 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const MONGO_URI = process.env.DB_URI;
-console.log("esta es ka uri", MONGO_URI);
-
-console.log("NODE_ENV:", process.env.NODE_ENV);
-console.log("DB_URI:", MONGO_URI ? "✔️ Cargada" : "❌ undefined");
 
 if (!MONGO_URI) {
   logger.error("❌ DB_URI is not defined in environment variables.");

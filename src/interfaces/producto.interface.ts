@@ -6,4 +6,5 @@ export interface ProductDTO {
   costCLP: number;
   priceARS: number;
   quantity: number;
+  currentExchangeRate: number;
 }

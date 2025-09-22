@@ -1,6 +1,7 @@
 import Joi from "joi";
 
 export const authVerification = Joi.object({
+  name: Joi.string().min(3).max(30).optional(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
 });
@@ -10,6 +11,7 @@ export const createProductJoi = Joi.object({
   costCLP: Joi.number().required(),
   priceARS: Joi.number().required(),
   quantity: Joi.number().required(),
+  currentExchangeRate: Joi.number().optional(),
 });
 
 export const createAnalysisJoi = Joi.object({
@@ -26,4 +28,13 @@ export const createAnalysisJoi = Joi.object({
     )
     .min(1)
     .required(),
+});
+
+export const createExchangeJoi = Joi.object({
+  userId: Joi.string().required(),
+  currentExchangeRate: Joi.number().required(),
+});
+
+export const updateExchangeJoi = Joi.object({
+  currentExchangeRate: Joi.number().required(),
 });

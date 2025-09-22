@@ -131,8 +131,6 @@ export class ComprasController {
   ): Promise<void> => {
     try {
       const { id } = req.params;
-      console.log("el producto", id);
-
       const deleted = await ComprasModel.deleteProduct(id);
 
       if (!deleted) {

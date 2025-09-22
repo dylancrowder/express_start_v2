@@ -17,8 +17,10 @@ import monitor from "./middlewares/monitor.middeware";
 // Routes
 import authRoutes from "./modules/auth/auth.routes";
 import inventarioRoutes from "./modules/dashboard/inventario/compras.routes";
-import analysisRoutes from "./modules/dashboard/analisis/inventario/analisis.routes";
+/* import analysisRoutes from "./modules/dashboard/analisis/analisis.routes"; */
+import exchangeRate from "./modules/dashboard/exchange/exchange.routes";
 import { initMongo } from "./db/db_connect";
+import { authMiddleware } from "./middlewares/authMiddleware";
 
 const app = express();
 
@@ -47,15 +49,11 @@ app.use(monitor);
 // Rutas
 app.use("/auth", authRoutes);
 app.use("/compras", inventarioRoutes);
-app.use("/analisis", analysisRoutes);
+app.use("/exchange-rate", authMiddleware, exchangeRate);
+/* app.use("/analisis", analysisRoutes); */
 
 // documentacion
 app.use("/documentacion", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-// Ruta raíz
-app.get("/", (req, res) => {
-  res.status(200).send(`EL USUARIO ES ${process.env.NODE_ENV}`);
-});
 
 // Rutas no encontradas
 app.use(errorRoute);

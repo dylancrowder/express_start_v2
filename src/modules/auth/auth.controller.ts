@@ -101,6 +101,7 @@ export class AuthController {
         accessToken: token,
         refreshToken: refreshToken,
         email: user.email,
+        name: user.name,
       });
     } catch (error) {
       next(error);

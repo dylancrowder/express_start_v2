@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 // Extiende los tipos de Express para que `req.user` sea reconocido
@@ -9,27 +9,38 @@ declare module "express" {
   }
 }
 
-export const authMiddleware = (req: any, res: any, next: any): any => {
-  try {
-    // Verificamos si existe el token en las cookies
-    const token = req.cookies.token;
-    if (!token) {
-      return res
-        .status(401)
-        .json({ message: "No token provided, authorization denied" });
-    }
+/**
+ * Middleware de autenticación con Bearer token
+ * Usa `Authorization: Bearer <token>` en los headers
+ */
+export const authMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const authHeader = req.headers.authorization;
 
-    // Verificamos y decodificamos el token con la clave secreta
+  // Verifica que exista header y tenga formato Bearer
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    res
+      .status(401)
+      .json({ message: "No token provided, authorization denied" });
+    return; // solo termina la ejecución, no retorna res
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    // Verifica token con JWT_SECRET
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
 
-    // Asignamos la información del usuario decodificado a `req.user`
+    // Guarda payload del usuario en req.user
     req.user = decoded;
 
-    // Continuar con la siguiente función
+    // Continua con la siguiente función/middleware
     next();
-  } catch {
-    // Si ocurre un error al verificar el token, respondemos y terminamos la ejecución
-    res.status(401).json({ message: "Token inválido o expirado" });
-    return;
+  } catch (error) {
+    res.status(401).json({ message: "Token inválido o expirado" + error });
+    return; // termina ejecución
   }
 };
