@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 
 import { AnalysisService } from "./analisis.model";
-import AppError from "../../../../utilities/error/appError";
-import { createAnalysisJoi } from "../../../../utilities/joi";
+import { createAnalysisJoi } from "../../../utilities/joi";
+import AppError from "../../../utilities/error/appError";
 
 export class AnalysisController {
   // CREAR ANÁLISIS

@@ -1,5 +1,5 @@
 import { Schema, model, HydratedDocument } from "mongoose";
-import { AnalysisDTO } from "../../../../interfaces/analysis.interface";
+import { AnalysisDTO } from "../../../interfaces/analysis.interface";
 
 export type AnalysisDocument = HydratedDocument<AnalysisDTO>;
 

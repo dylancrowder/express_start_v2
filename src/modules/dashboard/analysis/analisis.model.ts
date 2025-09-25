@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AnalysisDTO } from "../../../interfaces/analysis.interface";
 import AppError from "../../../utilities/error/appError";
 import AnalysisModel, { AnalysisDocument } from "./analisis.schema";
@@ -54,7 +55,9 @@ export class AnalysisService {
     const totalResults = analyses.reduce((acc, a) => acc + a.results.length, 0);
     const numericResultsCount = analyses.reduce(
       (acc, a) =>
-        acc + a.results.filter((r) => typeof r.value === "number").length,
+        acc +
+        a.results.filter((r: { value: any }) => typeof r.value === "number")
+          .length,
       0
     );
 
