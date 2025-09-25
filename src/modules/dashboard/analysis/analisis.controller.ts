@@ -1,17 +1,18 @@
 import { NextFunction, Request, Response } from "express";
-import { createProductJoi } from "../../../utilities/joi";
-import AppError from "../../../utilities/error/appError";
-import { ComprasModel } from "./compras.model";
 
-export class ComprasController {
-  // CREAR PRODUCTO
-  static createProducts = async (
+import { AnalysisService } from "./analisis.model";
+import AppError from "../../../../utilities/error/appError";
+import { createAnalysisJoi } from "../../../../utilities/joi";
+
+export class AnalysisController {
+  // CREAR ANÁLISIS
+  static createAnalysis = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { error, value } = createProductJoi.validate(req.body, {
+      const { error, value } = createAnalysisJoi.validate(req.body, {
         abortEarly: false,
         stripUnknown: false,
       });
@@ -21,12 +22,12 @@ export class ComprasController {
           "ValidationError",
           400,
           error,
-          "Datos inválidos. Por favor, revisa los campos del producto.",
+          "Datos inválidos. Por favor, revisa los campos del análisis.",
           true
         );
       }
 
-      // 👇 simulando userId (esto lo ideal sería sacarlo de auth en el futuro)
+      // 👇 simulando userId (lo ideal sería sacarlo del auth)
       const userId = "68c0540439042912f6fd5ee4";
 
       const bodySend = {
@@ -34,55 +35,55 @@ export class ComprasController {
         userId,
       };
 
-      const newProduct = await ComprasModel.addProduct(bodySend);
-      res.status(201).json(newProduct);
+      const newAnalysis = await AnalysisService.addAnalysis(bodySend);
+      res.status(201).json(newAnalysis);
     } catch (err) {
       next(err);
     }
   };
 
-  // OBTENER TODOS LOS PRODUCTOS
-  static getAllProducts = async (
+  // OBTENER TODOS LOS ANÁLISIS
+  static getAllAnalyses = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
-      const products = await ComprasModel.getAllProducts();
-      res.status(200).json(products);
+      const analyses = await AnalysisService.getAllAnalyses();
+      res.status(200).json(analyses);
     } catch (err) {
       next(err);
     }
   };
 
-  // OBTENER PRODUCTO POR ID
-  static getProductById = async (
+  // OBTENER ANÁLISIS POR ID
+  static getAnalysisById = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
       const { id } = req.params;
-      const product = await ComprasModel.getProductById(id);
+      const analysis = await AnalysisService.getAnalysisById(id);
 
-      if (!product) {
+      if (!analysis) {
         throw new AppError(
           "NotFound",
           404,
           null,
-          "Producto no encontrado",
+          "Análisis no encontrado",
           true
         );
       }
 
-      res.status(200).json(product);
+      res.status(200).json(analysis);
     } catch (err) {
       next(err);
     }
   };
 
-  // ACTUALIZAR PRODUCTO
-  static updateProduct = async (
+  // ACTUALIZAR ANÁLISIS
+  static updateAnalysis = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -90,7 +91,7 @@ export class ComprasController {
     try {
       const { id } = req.params;
 
-      const { error, value } = createProductJoi.validate(req.body, {
+      const { error, value } = createAnalysisJoi.validate(req.body, {
         abortEarly: false,
         stripUnknown: false,
       });
@@ -100,65 +101,63 @@ export class ComprasController {
           "ValidationError",
           400,
           error,
-          "Datos inválidos. Por favor, revisa los campos del producto.",
+          "Datos inválidos. Por favor, revisa los campos del análisis.",
           true
         );
       }
 
-      const updatedProduct = await ComprasModel.updateProduct(id, value);
+      const updatedAnalysis = await AnalysisService.updateAnalysis(id, value);
 
-      if (!updatedProduct) {
+      if (!updatedAnalysis) {
         throw new AppError(
           "NotFound",
           404,
           null,
-          "Producto no encontrado",
+          "Análisis no encontrado",
           true
         );
       }
 
-      res.status(200).json(updatedProduct);
+      res.status(200).json(updatedAnalysis);
     } catch (err) {
       next(err);
     }
   };
 
-  // ELIMINAR PRODUCTO
-  static deleteProduct = async (
+  // ELIMINAR ANÁLISIS
+  static deleteAnalysis = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
       const { id } = req.params;
-      console.log("el producto", id);
-
-      const deleted = await ComprasModel.deleteProduct(id);
+      const deleted = await AnalysisService.deleteAnalysis(id);
 
       if (!deleted) {
         throw new AppError(
           "NotFound",
           404,
           null,
-          "Producto no encontrado",
+          "Análisis no encontrado",
           true
         );
       }
 
-      res.status(200).json({ message: "Producto eliminado correctamente" });
+      res.status(200).json({ message: "Análisis eliminado correctamente" });
     } catch (err) {
       next(err);
     }
   };
 
-  // RESUMEN DE PRODUCTOS (opcional)
+  // RESUMEN DE ANÁLISIS
   static getSummary = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
-      const summary = await ComprasModel.getSummary();
+      const summary = await AnalysisService.getSummary();
       res.status(200).json(summary);
     } catch (err) {
       next(err);

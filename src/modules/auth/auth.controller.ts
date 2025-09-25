@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -101,6 +100,7 @@ export class AuthController {
         accessToken: token,
         refreshToken: refreshToken,
         email: user.email,
+        name: user.name,
       });
     } catch (error) {
       next(error);
@@ -114,7 +114,7 @@ export class AuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      res.clearCookie("token");
+      // Solo frontend elimina tokens del state/localStorage
       res.status(200).json({ message: "Sesión cerrada exitosamente." });
     } catch (error: any) {
       next(error);
@@ -122,21 +122,21 @@ export class AuthController {
   };
 
   // REFRESH TOKEN
-  static refresh = (req: Request, res: Response, next: NextFunction) => {
+  static refresh = (req: Request, res: Response, next: NextFunction): void => {
     try {
-      const { refreshToken } = req.body;
-      if (!refreshToken)
-        return res.status(401).json({ error: "No refresh token" });
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        res.status(401).json({ error: "No refresh token" });
+        return;
+      }
 
-      const JWT_SECRET = process.env.JWT_SECRET;
-      const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
-      if (!JWT_SECRET || !JWT_REFRESH_SECRET)
-        throw new Error("JWT secrets deben estar definidos");
+      const refreshToken = authHeader.split(" ")[1];
 
-      // Verificar refresh token
+      const JWT_SECRET = process.env.JWT_SECRET!;
+      const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET!;
+
       const payload: any = jwt.verify(refreshToken, JWT_REFRESH_SECRET);
 
-      // Crear nuevo access token
       const newAccessToken = jwt.sign({ userId: payload.userId }, JWT_SECRET, {
         expiresIn: "1h",
       });

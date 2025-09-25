@@ -5,10 +5,14 @@ import AppError from "../../utilities/error/appError";
 import { UserDTO } from "../../interfaces/user.interface";
 
 export class AuthModel {
-  static async register({ email, password }: UserDTO): Promise<UserDocument> {
+  static async register({
+    email,
+    password,
+    name,
+  }: UserDTO): Promise<UserDocument> {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new User({ email, password: hashedPassword });
+      const newUser = new User({ email, password: hashedPassword, name });
       return await newUser.save();
     } catch (error: any) {
       if (error.code === 11000) {

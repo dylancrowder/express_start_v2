@@ -1,6 +1,6 @@
 import { ProductDTO } from "../../../interfaces/producto.interface";
 import AppError from "../../../utilities/error/appError";
-import ProductModel, { ProductDocument } from "./compras.schema";
+import ProductModel, { ProductDocument } from "./inventary.schema";
 
 export class ComprasModel {
   // CREAR PRODUCTO

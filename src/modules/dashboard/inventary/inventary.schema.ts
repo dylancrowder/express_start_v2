@@ -15,6 +15,7 @@ const ProductSchema = new Schema<ProductDTO>(
       min: 1,
       validate: Number.isInteger,
     },
+    currentExchangeRate: { type: Number, required: true, min: 1 },
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
