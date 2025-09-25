@@ -9,6 +9,12 @@ import cookieParser from "cookie-parser";
 import { swaggerDocs } from "./documentation/swagger.config";
 import { apiLimiter } from "./utilities/apiLimiter";
 
+declare module "express-serve-static-core" {
+  interface Request {
+    user?: Record<string, unknown>;
+  }
+}
+
 // Middlewares
 import errorHandler from "./middlewares/error.middleware";
 import errorRoute from "./middlewares/error.route";
@@ -16,7 +22,7 @@ import monitor from "./middlewares/monitor.middeware";
 
 // Routes
 import authRoutes from "./modules/auth/auth.routes";
-import inventarioRoutes from "./modules/dashboard/inventario/compras.routes";
+import inventarioRoutes from "./modules/dashboard/inventary/inventary.routes";
 /* import analysisRoutes from "./modules/dashboard/analisis/analisis.routes"; */
 import exchangeRate from "./modules/dashboard/exchange/exchange.routes";
 import { initMongo } from "./db/db_connect";
@@ -47,8 +53,11 @@ app.use(cookieParser());
 app.use(monitor);
 
 // Rutas
+app.get("/protected", authMiddleware, (req, res) => {
+  res.json({ message: "Ruta protegida accesible!", user: req.user });
+});
 app.use("/auth", authRoutes);
-app.use("/compras", inventarioRoutes);
+app.use("/inventory", authMiddleware, inventarioRoutes);
 app.use("/exchange-rate", authMiddleware, exchangeRate);
 /* app.use("/analisis", analysisRoutes); */
 

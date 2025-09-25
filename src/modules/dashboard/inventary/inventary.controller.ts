@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { createProductJoi } from "../../../utilities/joi";
 import AppError from "../../../utilities/error/appError";
-import { ComprasModel } from "./compras.model";
+import { ComprasModel } from "./inventary.model";
 
 export class ComprasController {
   // CREAR PRODUCTO
