@@ -9,7 +9,7 @@ import { AuthModel } from "./auth.model";
 import { UserDTO } from "../../interfaces/user.interface";
 
 export class AuthController {
-  // REGISTRAR USUARIO
+  // REGISTRAR USUARIOs
   static register = async (
     req: Request,
     res: Response,

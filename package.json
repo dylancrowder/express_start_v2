@@ -52,7 +52,7 @@
     "nodemon": "^3.1.7",
     "pino-pretty": "^13.1.1",
     "supertest": "7.0.0",
-    "ts-jest": "^29.2.5",
+    "ts-jest": "^29.4.4",
     "ts-node": "10.9.2",
     "typescript": "5.6.3",
     "typescript-eslint": "8.15.0"
