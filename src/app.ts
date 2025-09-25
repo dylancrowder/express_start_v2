@@ -56,6 +56,9 @@ app.use(monitor);
 app.get("/protected", authMiddleware, (req, res) => {
   res.json({ message: "Ruta protegida accesible!", user: req.user });
 });
+app.get("/", (req, res) => {
+  res.json({ message: "hola!!" });
+});
 app.use("/auth", authRoutes);
 app.use("/inventory", authMiddleware, inventarioRoutes);
 app.use("/exchange-rate", authMiddleware, exchangeRate);

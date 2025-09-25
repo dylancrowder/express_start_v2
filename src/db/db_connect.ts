@@ -32,7 +32,7 @@ export const initMongo = async () => {
         serverSelectionTimeoutMS: 20000,
         socketTimeoutMS: 45000,
         maxPoolSize: 10,
-        bufferCommands: false,
+        bufferCommands: true,
       })
       .then((mongoose) => {
         logger.info("✅ Base de datos conectada correctamente");
