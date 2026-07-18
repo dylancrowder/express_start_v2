@@ -22,19 +22,12 @@ import monitor from "./middlewares/monitor.middeware";
 
 // Routes
 import authRoutes from "./modules/auth/auth.routes";
-import inventarioRoutes from "./modules/dashboard/inventary/inventary.routes";
-/* import analysisRoutes from "./modules/dashboard/analisis/analisis.routes"; */
-import exchangeRate from "./modules/dashboard/exchange/exchange.routes";
-import { initMongo } from "./db/db_connect";
+
+ import test from "./modules/dashboard/test/analisis.routes"; 
+
 import { authMiddleware } from "./middlewares/authMiddleware";
 
 const app = express();
-
-// Inicializar MongoDB
-initMongo().catch((err) => {
-  console.error("Error inicializando Mongo:", err);
-  process.exit(1);
-});
 
 // Middlewares de seguridad y performance
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -59,10 +52,12 @@ app.get("/protected", authMiddleware, (req, res) => {
 app.get("/", (req, res) => {
   res.json({ message: "hola!!" });
 });
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 app.use("/auth", authRoutes);
-app.use("/inventory", authMiddleware, inventarioRoutes);
-app.use("/exchange-rate", authMiddleware, exchangeRate);
-/* app.use("/analisis", analysisRoutes); */
+
+ app.use("/test", test); 
 
 // documentacion
 app.use("/documentacion", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
